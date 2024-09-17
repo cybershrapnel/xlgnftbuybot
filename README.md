@@ -158,7 +158,12 @@ Set the following environment variables to configure the bot: (Values are precon
 This section provides step-by-step instructions on how to use the Transaction Monitoring and Posting Bot effectively.
 
 Make sure to unzip the images folder and that the txids.txt filfe is up to date with what any other instance of the bot may have posted on another server such as from the development server.
+
 All images should be directly in the images folder and the txt file should be in the same directory as the py script.
+
+download and unzip the images from the files on the release page. They were too big to upload.
+
+Download from https://github.com/cybershrapnel/xlgnftbuybot/releases/tag/images
 
 ### **1. Running the Script**
 
