@@ -1,4 +1,4 @@
-# **Transaction Monitoring and Posting Bot Documentation**
+# **XLG NFT BUY BOT - Transaction Monitoring and Posting Bot Documentation**
 
 ## **Table of Contents**
 
@@ -28,7 +28,6 @@
 11. [Support Information](#support-information)
 12. [Appendix](#appendix)
     - [1. Dependency List](#1-dependency-list)
-    - [2. Sample Configuration](#2-sample-configuration)
 
 ---
 
@@ -81,15 +80,13 @@ Follow these steps to set up the Transaction Monitoring and Posting Bot on your 
 Clone the repository containing the script to your local machine.
 
 ```bash
-git clone https://github.com/yourusername/transaction-monitoring-bot.git
-cd transaction-monitoring-bot
+git clone https://github.com/cybershrapnel/xlgnftbuybot.git
+cd xlgnftbuybot
 ```
-
-*Replace `yourusername` and the repository name with the actual repository details.*
 
 ### **2. Set Up the Python Environment**
 
-It's recommended to use a virtual environment to manage dependencies.
+It's recommended to use a virtual environment to manage dependencies but not necessary.
 
 #### **Using `venv`:**
 
@@ -105,8 +102,6 @@ Install the required Python packages using `pip`.
 ```bash
 pip install -r requirements.txt
 ```
-
-*Ensure that `requirements.txt` contains all necessary dependencies. If not provided, refer to the [Dependency List](#1-dependency-list) in the Appendix.*
 
 ### **4. Install Playwright Browsers**
 
@@ -126,7 +121,7 @@ Proper configuration is crucial for the bot to function as intended. The bot use
 
 ### **1. Environment Variables**
 
-Set the following environment variables to configure the bot:
+Set the following environment variables to configure the bot: (Values are preconfigured no adjustments needed, just for reference)
 
 - **`XLG_CONTRACT_ADDRESS`**
   - **Description:** Contract address for `$XLG`.
@@ -156,73 +151,14 @@ Set the following environment variables to configure the bot:
   - **Description:** TronScan API endpoint for transaction details.
   - **Default:** `https://apilist.tronscanapi.com/api/transaction-info?hash={}`
 
-#### **Setting Environment Variables:**
-
-You can set environment variables in your terminal session or define them in a `.env` file using a library like `python-dotenv`. Below is an example of setting them in a Unix-like terminal:
-
-```bash
-export XLG_CONTRACT_ADDRESS="TQr5axvJzETeHsUiXv6QjBEh1BKH571AZu"
-export USERNAME="xlgnftbuybot"
-export SPECIFIC_DECK_ADDRESS="TDuEK3tqCn9YPFNAFd7SDypdqDisNXm1xr"
-export IMAGES_FOLDER="images"
-export TXIDS_FILE="txids.txt"
-export TRONGRID_API_URL="https://api.trongrid.io/v1/contracts/{}/transactions"
-export TRONSCAN_API_URL="https://apilist.tronscanapi.com/api/transaction-info?hash={}"
-```
-
-*For Windows Command Prompt:*
-
-```cmd
-set XLG_CONTRACT_ADDRESS=TQr5axvJzETeHsUiXv6QjBEh1BKH571AZu
-set USERNAME=xlgnftbuybot
-set SPECIFIC_DECK_ADDRESS=TDuEK3tqCn9YPFNAFd7SDypdqDisNXm1xr
-set IMAGES_FOLDER=images
-set TXIDS_FILE=txids.txt
-set TRONGRID_API_URL=https://api.trongrid.io/v1/contracts/{}/transactions
-set TRONSCAN_API_URL=https://apilist.tronscanapi.com/api/transaction-info?hash={}
-```
-
-### **2. Configuration File (Optional)**
-
-For ease of management, especially when dealing with multiple environment variables, consider using a `.env` file combined with the `python-dotenv` library.
-
-1. **Install `python-dotenv`:**
-
-   ```bash
-   pip install python-dotenv
-   ```
-
-2. **Create a `.env` File:**
-
-   In the root directory of your project, create a `.env` file and add the following content:
-
-   ```env
-   XLG_CONTRACT_ADDRESS=TQr5axvJzETeHsUiXv6QjBEh1BKH571AZu
-   USERNAME=xlgnftbuybot
-   SPECIFIC_DECK_ADDRESS=TDuEK3tqCn9YPFNAFd7SDypdqDisNXm1xr
-   IMAGES_FOLDER=images
-   TXIDS_FILE=txids.txt
-   TRONGRID_API_URL=https://api.trongrid.io/v1/contracts/{}/transactions
-   TRONSCAN_API_URL=https://apilist.tronscanapi.com/api/transaction-info?hash={}
-   ```
-
-3. **Modify the Script to Load `.env` Variables:**
-
-   Add the following lines at the beginning of your script to load the environment variables:
-
-   ```python
-   from dotenv import load_dotenv
-
-   load_dotenv()  # This will load variables from .env into environment
-   ```
-
-*This approach centralizes configuration and enhances security by keeping sensitive data out of the codebase.*
-
 ---
 
 ## **Usage Guide**
 
 This section provides step-by-step instructions on how to use the Transaction Monitoring and Posting Bot effectively.
+
+Make sure to unzip the images folder and that the txids.txt filfe is up to date with what any other instance of the bot may have posted on another server such as from the development server.
+All images should be directly in the images folder and the txt file should be in the same directory as the py script.
 
 ### **1. Running the Script**
 
@@ -234,9 +170,13 @@ python transaction_monitoring_bot.py
 
 *Ensure that your virtual environment is activated and all dependencies are installed.*
 
+Once the script starts a firefox web browser will load and will wait for you to login to X with the proper user that the script is configured for.
+Once you login in the script will do everything on it's own.
+
 ### **2. Manual Transaction Processing**
 
-The bot allows manual addition and processing of specific transaction IDs. This is useful for reprocessing or handling transactions not detected automatically.
+The bot allows manual addition and processing of specific transaction IDs. This is useful for reprocessing or handling transactions not detected automatically or for adding older transactions from the past.
+Make sure any manual additions are not in the txids.txt file or they will be ignored.
 
 1. **Add Transaction IDs:**
 
@@ -260,6 +200,8 @@ After processing existing transactions, the bot enters a monitoring loop to dete
 
 *The monitoring process continues indefinitely until the script is terminated.*
 
+** Note that image 107 and 1076 were not accessible via BTFS. I did not include placeholders and you may want to find the correct images or add placeholders.
+It should function fine and post with no image but there is a chance it could crash as I did not test those two cases.
 ---
 
 ## **Development Documentation**
@@ -530,19 +472,7 @@ Encountering issues while setting up or running the bot? Refer to the common pro
 ### **Q5. How can I ensure the bot runs continuously without interruptions?**
 
 **A:** Consider deploying the bot on a dedicated server or cloud service with high availability. Use process managers like `systemd`, `pm2`, or Docker containers to manage the bot's lifecycle and ensure it restarts automatically in case of failures.
-
----
-
-## **Support Information**
-
-If you encounter issues not covered in the troubleshooting section or need further assistance, please reach out through the following channels:
-
-- **Email:** support@yourdomain.com
-- **GitHub Issues:** [Transaction Monitoring Bot Issues](https://github.com/yourusername/transaction-monitoring-bot/issues)
-- **Community Forum:** [Your Support Forum Link](https://forum.yourdomain.com)
-- **Live Chat:** Available on [Your Support Page](https://yourdomain.com/support)
-
-*Replace the placeholders with your actual support channels.*
+(I can easily set the script up on a loop with auto login features in case of crash or failure but that is not very secure)
 
 ---
 
@@ -574,35 +504,10 @@ pip install requests base58 playwright aiohttp aiofiles python-dotenv
 
 *Note: Ensure `playwright` is properly installed and the browsers are set up using `playwright install`.*
 
-### **2. Sample Configuration**
-
-Below is a sample `.env` file to help you set up the environment variables easily.
-
-```env
-# Tron Contract Configuration
-XLG_CONTRACT_ADDRESS=TQr5axvJzETeHsUiXv6QjBEh1BKH571AZu
-SPECIFIC_DECK_ADDRESS=TDuEK3tqCn9YPFNAFd7SDypdqDisNXm1xr
-
-# User Configuration
-USERNAME=xlgnftbuybot
-
-# File Paths
-IMAGES_FOLDER=images
-TXIDS_FILE=txids.txt
-
-# API Endpoints
-TRONGRID_API_URL=https://api.trongrid.io/v1/contracts/{}/transactions
-TRONSCAN_API_URL=https://apilist.tronscanapi.com/api/transaction-info?hash={}
-```
-
-*Save this content in a file named `.env` in the root directory of your project.*
-
 ---
 
 # **Conclusion**
 
 This documentation aims to provide a comprehensive guide for setting up, using, and maintaining the Transaction Monitoring and Posting Bot. By following the outlined steps and best practices, you can ensure the bot operates efficiently and securely, effectively fulfilling its purpose of monitoring Tron blockchain transactions and posting relevant details to X.com.
-
-For any further questions or assistance, please refer to the [Support Information](#support-information) section.
 
 ---
